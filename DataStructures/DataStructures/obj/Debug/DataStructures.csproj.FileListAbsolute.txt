@@ -1,0 +1,8 @@
+c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\bin\Debug\DataStructures.exe.config
+c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\bin\Debug\DataStructures.exe
+c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\bin\Debug\DataStructures.pdb
+c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\bin\Debug\Newtonsoft.Json.dll
+c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\bin\Debug\Newtonsoft.Json.xml
+c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.csprojResolveAssemblyReference.cache
+c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.exe
+c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.pdb
