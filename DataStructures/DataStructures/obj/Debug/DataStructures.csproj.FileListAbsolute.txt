@@ -6,3 +6,11 @@ c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructur
 c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.csprojResolveAssemblyReference.cache
 c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.exe
 c:\users\tkidd\documents\visual studio 2013\Projects\DataStructures\DataStructures\obj\Debug\DataStructures.pdb
+C:\Users\tkidd\github\csharp\DataStructures\DataStructures\bin\Debug\DataStructures.exe.config
+C:\Users\tkidd\github\csharp\DataStructures\DataStructures\obj\Debug\DataStructures.exe
+C:\Users\tkidd\github\csharp\DataStructures\DataStructures\obj\Debug\DataStructures.pdb
+C:\Users\tkidd\github\csharp\DataStructures\DataStructures\bin\Debug\DataStructures.exe
+C:\Users\tkidd\github\csharp\DataStructures\DataStructures\bin\Debug\DataStructures.pdb
+C:\Users\tkidd\github\csharp\DataStructures\DataStructures\bin\Debug\Newtonsoft.Json.dll
+C:\Users\tkidd\github\csharp\DataStructures\DataStructures\bin\Debug\Newtonsoft.Json.xml
+C:\Users\tkidd\github\csharp\DataStructures\DataStructures\obj\Debug\DataStructures.csprojResolveAssemblyReference.cache

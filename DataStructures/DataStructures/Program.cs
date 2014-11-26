@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 namespace DataStructures {
     class Program {
         static void Main(string[] args) {
-            TreeUsage.TreeUsageMain();
+            //TreeUsage.TreeUsageMain();
+            FiniteStateMachineUsage.FiniteStateMachineUsageMain();
         }
     }
 }
