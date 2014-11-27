@@ -96,6 +96,7 @@ namespace DataStructures {
             Console.WriteLine(Compute("011","100"));
             Console.WriteLine(Compute("101", "011"));
             Console.WriteLine(Compute("010", "001"));
+            Console.WriteLine(Compute("01110110", "01010101"));
             Console.ReadLine();
 
             // Do some binary counting
