@@ -31,6 +31,9 @@ namespace ConsoleServer {
             var middleware2 = new Func<AppFunc, AppFunc>(Middleware2);
             var middleware3 = new Func<AppFunc, AppFunc>(Middleware3);
 
+            app.UseSillyLoggingMiddleware();
+            app.UseSillyAuthenticationMiddleware();
+
             app.Use(middleware1);
             app.Use(middleware2);
             app.Use(middleware3);
@@ -127,7 +130,9 @@ namespace ConsoleServer {
             IOwinContext context = new OwinContext(env);
 
             await context.Response.WriteAsync(string.Format("<h1>{0}</h2>", _options.GetGreeting()));
-            await _next.Invoke(env);
+            //await _next.Invoke(env);
+            context.Response.StatusCode = 200;
+            context.Response.ReasonPhrase = "OK";
         }
     }
 
@@ -154,6 +159,46 @@ namespace ConsoleServer {
         }
     }
 
+    public class SillyAuthenticationMiddleware {
+        AppFunc _next;
+        public SillyAuthenticationMiddleware(AppFunc next) {
+            _next = next;
+        }
+
+        public async Task Invoke(IDictionary<string, object> env) {
+            IOwinContext context = new OwinContext(env);
+
+            var isAuthorized = context.Request.QueryString.Value == "password";
+            if (!isAuthorized) {
+                context.Response.StatusCode = 401;
+                context.Response.ReasonPhrase = "Not Authorized";
+
+                await context.Response.WriteAsync(string.Format("<h1>Error {0}-{1}",
+                    context.Response.StatusCode,
+                    context.Response.ReasonPhrase));
+            } else {
+                context.Response.StatusCode = 200;
+                context.Response.ReasonPhrase = "OK";
+                await _next.Invoke(env);
+            }
+        }
+    }
+
+    public class SillyLoggingMiddleware {
+        AppFunc _next;
+        public SillyLoggingMiddleware(AppFunc next) {
+            _next = next;
+        }
+
+        public async Task Invoke(IDictionary<string, object> env) {
+            await _next.Invoke(env);
+
+            IOwinContext context = new OwinContext(env);
+            Console.WriteLine("URI: {0} Status Code: {1}", context.Request.Uri,
+                context.Response.StatusCode);
+        }
+    }
+
     public static class AppBuilderExtensions {
         public static void UseMiddleware4(this IAppBuilder app) {
             app.Use<Middleware4>();
@@ -165,6 +210,14 @@ namespace ConsoleServer {
 
         public static void UseMiddleware6(this IAppBuilder app, MiddlewareConfigOptions configOptions) {
             app.Use<Middleware6>(configOptions);
+        }
+
+        public static void UseSillyAuthenticationMiddleware(this IAppBuilder app) {
+            app.Use<SillyAuthenticationMiddleware>();
+        }
+
+        public static void UseSillyLoggingMiddleware(this IAppBuilder app) {
+            app.Use<SillyLoggingMiddleware>();
         }
     }
 }
