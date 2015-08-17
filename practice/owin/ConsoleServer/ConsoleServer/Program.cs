@@ -13,9 +13,17 @@ using Microsoft.Owin.Hosting;
 using Microsoft.Owin;
 /* The Microsoft.Owin namespace provides IOwinContext, OwinContext */
 
+using System.Web.Http;
+/* System.Web.Http.Owin provides the UseWebApi extension */
+
+using Newtonsoft.Json;
+
 namespace ConsoleServer {
     using AppFunc = Func<IDictionary<string, object>, Task>;
     using System.IO;
+    using System.Net.Http.Formatting;
+    using Newtonsoft.Json.Serialization;
+    using Newtonsoft.Json.Converters;
 
     class Program {
         static void Main(string[] args) {
@@ -33,6 +41,8 @@ namespace ConsoleServer {
 
             app.UseSillyLoggingMiddleware();
             app.UseSillyAuthenticationMiddleware();
+
+            app.UseWebApi(GetWebApiConfig());
 
             app.Use(middleware1);
             app.Use(middleware2);
@@ -79,6 +89,24 @@ namespace ConsoleServer {
                 await next.Invoke(env);
             };
             return appFunc;
+        }
+
+        public HttpConfiguration GetWebApiConfig() {
+            var config = new HttpConfiguration();
+            config.Routes.MapHttpRoute(
+                name: "DefaultApi",
+                routeTemplate: "api/{controller}/{id}",
+                defaults: new { id = RouteParameter.Optional }
+            );
+            config.Formatters.Clear();
+            config.Formatters.Add(new JsonMediaTypeFormatter());
+            config.Formatters.JsonFormatter.SerializerSettings =
+                new JsonSerializerSettings {
+                    ContractResolver = new CamelCasePropertyNamesContractResolver()
+                };
+            config.Formatters.JsonFormatter.SerializerSettings.Converters.Add(new StringEnumConverter());
+
+            return config;
         }
     }
 
@@ -130,9 +158,9 @@ namespace ConsoleServer {
             IOwinContext context = new OwinContext(env);
 
             await context.Response.WriteAsync(string.Format("<h1>{0}</h2>", _options.GetGreeting()));
-            //await _next.Invoke(env);
-            context.Response.StatusCode = 200;
-            context.Response.ReasonPhrase = "OK";
+            await _next.Invoke(env);
+            //context.Response.StatusCode = 200;
+            //context.Response.ReasonPhrase = "OK";
         }
     }
 
@@ -168,7 +196,7 @@ namespace ConsoleServer {
         public async Task Invoke(IDictionary<string, object> env) {
             IOwinContext context = new OwinContext(env);
 
-            var isAuthorized = context.Request.QueryString.Value == "password";
+            var isAuthorized = true;//context.Request.QueryString.Value == "password";
             if (!isAuthorized) {
                 context.Response.StatusCode = 401;
                 context.Response.ReasonPhrase = "Not Authorized";
